@@ -3,24 +3,23 @@
             [io.pedestal.http.route :as route]
             [io.pedestal.http.body-params :as body-params]
             [io.pedestal.http.route.definition :refer [defroutes]]
+            [io.pedestal.interceptor.helpers :as ph]
             [ring.util.response :as ring-resp]))
 
 (defn about-page
   [request]
-  (ring-resp/response (format "Clojure %s - served from %s"
-                              (clojure-version)
-                              (route/url-for ::about-page))))
+  {:message "about page"})
 
 (defn home-page
   [request]
-  (ring-resp/response "Hello World!"))
+  {:message "Hello World!"})
+
+(ph/defon-response wrap-json-response [resp]
+  (bootstrap/json-response resp))
 
 (defroutes routes
-  ;; Defines "/" and "/about" routes with their associated :get handlers.
-  ;; The interceptors defined after the verb map (e.g., {:get home-page}
-  ;; apply to / and its children (/about).
   [[["/" {:get home-page}
-     ^:interceptors [(body-params/body-params) bootstrap/html-body]
+     ^:interceptors [(body-params/body-params) wrap-json-response]
      ["/about" {:get about-page}]]]])
 
 ;; Consumed by pedestal-rest.server/create-server
