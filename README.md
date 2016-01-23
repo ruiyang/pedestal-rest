@@ -2,10 +2,10 @@
 A project build on clojure ecosystem. The aim to compose different libraries to build a single page app backend.
 
 ## To DO
-1. Json request/response
-2. Authentication
-3. Authorization
-4. Logging
+- [x] Json request/response
+- [x] Authentication
+- [ ] Authorization
+- [ ] Logging
 
 ## Getting Started
 
