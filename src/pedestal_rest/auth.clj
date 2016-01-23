@@ -27,15 +27,11 @@
             token (jwe/encrypt claims secret encryption)]
         {:status 200 :body {:token token}}))))
 
-
-(proto/-parse auth-backend request)
-
 (defbefore check-auth
- [{:keys [request] :as context}]
+  [{:keys [request] :as context}]
   (let [auth-data (try (some->> (proto/-parse auth-backend request)
-                          (proto/-authenticate auth-backend request))
-                 (catch Exception e
-                   (prn "caught" e)))]
+                                (proto/-authenticate auth-backend request))
+                       (catch Exception -))]
     (if auth-data
       (let [req (assoc request :identity auth-data)]
         (assoc context :request req))
