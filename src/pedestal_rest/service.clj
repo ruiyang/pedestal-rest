@@ -4,7 +4,8 @@
             [io.pedestal.http.body-params :as body-params]
             [io.pedestal.http.route.definition :refer [defroutes]]
             [io.pedestal.interceptor.helpers :as ph]
-            [ring.util.response :as ring-resp]))
+            [ring.util.response :as ring-resp]
+            [pedestal-rest.auth :as auth]))
 
 (defn about-page
   [request]
@@ -14,12 +15,21 @@
   [request]
   {:message "Hello World!"})
 
+(defn get-name
+  [request]
+  {:name "haha"})
+
 (ph/defon-response wrap-json-response [resp]
   (bootstrap/json-response resp))
 
 (defroutes routes
   [[["/" {:get home-page}
      ^:interceptors [(body-params/body-params) wrap-json-response]
+     ["/login" {:post auth/login}]
+     ["/user/:id"
+      ^:interceptors [auth/check-auth]
+      ["/name" {:get get-name}]
+      ]
      ["/about" {:get about-page}]]]])
 
 ;; Consumed by pedestal-rest.server/create-server
