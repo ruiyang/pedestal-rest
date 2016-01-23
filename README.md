@@ -1,5 +1,5 @@
 # pedestal-rest
-A project build on clojure ecosystem. The aim to compose different libraries to build a single page app backend.
+A project build on clojure ecosystem. The aim is to compose different libraries to build a single page app backend template.
 
 ## To DO
 - [x] Json request/response
