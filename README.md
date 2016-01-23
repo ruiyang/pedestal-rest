@@ -5,6 +5,8 @@ A project build on clojure ecosystem. The aim to compose different libraries to 
 - [x] Json request/response
 - [x] Authentication
 - [ ] Authorization
+- [ ] DB access
+- [ ] Data migration
 - [ ] Logging
 
 ## Getting Started
