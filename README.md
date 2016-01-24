@@ -2,8 +2,8 @@
 A project build on clojure ecosystem. The aim is to compose different libraries to build a single page app backend template.
 
 ## To DO
-- [x] Json request/response
-- [x] Authentication
+- [x] Json request/response (with pedestal json-response)
+- [x] Authentication (with buddy-auth)
 - [ ] Authorization
 - [ ] DB access
 - [ ] Data migration
@@ -13,16 +13,27 @@ A project build on clojure ecosystem. The aim is to compose different libraries 
 
 1. Start the application: `lein run-dev` \*
 2. Go to [localhost:8080](http://localhost:8080/) to see: `Hello World!`
-3. Read your app's source code at src/pedestal_rest/service.clj. Explore the docs of functions
-   that define routes and responses.
-4. Run your app's tests with `lein test`. Read the tests at test/pedestal_rest/service_test.clj.
-5. Learn more! See the [Links section below](#links).
-
-\* `lein run-dev` automatically detects code changes. Alternatively, you can run in production mode
-with `lein run`.
-
-## Configuration
-
-To configure logging see config/logback.xml. By default, the app logs to stdout and logs/.
-To learn more about configuring Logback, read its [documentation](http://logback.qos.ch/documentation.html).
-
+3. Endpoint without authentication
+```shell
+curl -X GET -H 'Content-Type: application/json" }' http://localhost:8080/about
+returns:
+{"message":"pedestal-rest: a single page app backend."}
+```
+4. Endpoint to login /login
+```shell
+curl -X POST -H 'Content-Type: application/json" }' -d '{"username": "admin", "password": "admin"}' http://localhost:8080/login
+```
+returns
+```json
+{"status":200,"body":{"token": <encryped jwe token>}}
+```
+5. Endpoint protected by authentication
+```shell
+curl -X GET -H 'Content-Type: application/json" }' -H 'Authorization: Token <token from step.4>' http://localhost:8080/user/10/name
+```
+returns
+```json
+{
+    "name": "admin"
+}
+```
