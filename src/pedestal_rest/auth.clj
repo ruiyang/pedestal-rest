@@ -6,7 +6,8 @@
             [buddy.auth.protocols :as proto]
             [buddy.sign.jwe :as jwe]
             [buddy.core.nonce :as nonce]
-            [buddy.auth.backends.token :refer [jwe-backend]]))
+            [buddy.auth.backends.token :refer [jwe-backend]]
+            [buddy.auth.middleware :refer [wrap-authentication]]))
 
 (defonce secret (nonce/random-bytes 32))
 (def encryption {:alg :a256kw :enc :a128gcm})
@@ -27,14 +28,18 @@
             token (jwe/encrypt claims secret encryption)]
         {:status 200 :body {:token token}}))))
 
+(defn- fake-handler
+  [request]
+  request)
+
+(def ^:private buddy-check-auth
+  (wrap-authentication fake-handler auth-backend))
+
 (defbefore check-auth
   [{:keys [request] :as context}]
-  (let [auth-data (try (some->> (proto/-parse auth-backend request)
-                                (proto/-authenticate auth-backend request))
-                       (catch Exception -))]
-    (if auth-data
-      (let [req (assoc request :identity auth-data)]
-        (assoc context :request req))
+  (let [req-with-auth (buddy-check-auth request)]
+    (if (:identity req-with-auth)
+      (assoc context :request req-with-auth)
       (-> context
           terminate
-          (assoc :response {:status 401 :body {:message "Unauthorized"}})))))
+          (assoc :response {:status 401 :body {:message (:identity "Unauthorized")}})))))
