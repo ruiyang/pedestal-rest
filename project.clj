@@ -17,11 +17,22 @@
                  [org.slf4j/jcl-over-slf4j "1.7.12"]
                  [org.slf4j/log4j-over-slf4j "1.7.12"]
                  [buddy/buddy-auth "0.9.0"]
-                 [clj-time "0.11.0"]]
+                 [clj-time "0.11.0"]
+                 [conman "0.2.9"]
+
+                 ;; possible dev profile dependency
+                 [migratus "0.8.8"]
+                 [com.h2database/h2 "1.4.190"]]
   :min-lein-version "2.0.0"
-  :resource-paths ["config", "resources"]
+  :plugins [[migratus-lein "0.2.0"]]
+  :resource-paths ["config", "resources", "db"] ;; db should be dev resources
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "pedestal-rest.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.4.1"]]}
              :uberjar {:aot [pedestal-rest.server]}}
-  :main ^{:skip-aot true} pedestal-rest.server)
+  :main ^{:skip-aot true} pedestal-rest.server
+  :migratus {:store :database
+             :migration-dir "migrations"
+             :db  {:classname "org.h2.Driver"
+                   :subprotocol "h2:file"
+                   :subname "./db/my-webapp"}})
 
