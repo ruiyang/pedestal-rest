@@ -5,8 +5,8 @@ A project build on clojure ecosystem. The aim is to compose different libraries 
 - [x] Json request/response (with pedestal json-response)
 - [x] Authentication (with buddy-auth)
 - [ ] Authorization
-- [ ] DB access
-- [ ] Data migration
+- [x] DB access
+- [x] Data migration
 - [ ] Logging
 
 ## Getting Started
