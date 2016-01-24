@@ -9,15 +9,15 @@
 
 (defn about-page
   [request]
-  {:message "about page"})
+  {:message "pedestal-rest: a single page app backend."})
 
 (defn home-page
   [request]
   {:message "Hello World!"})
 
-(defn get-name
+(ph/defhandler get-name
   [request]
-  {:name "haha"})
+  {:name (get-in request [:identity :user :name])})
 
 (ph/defon-response wrap-json-response [resp]
   (bootstrap/json-response resp))
@@ -26,10 +26,8 @@
   [[["/" {:get home-page}
      ^:interceptors [(body-params/body-params) wrap-json-response]
      ["/login" {:post auth/login}]
-     ["/user/:id"
-      ^:interceptors [auth/check-auth]
-      ["/name" {:get get-name}]
-      ]
+     ["/user/:id" ^:interceptors [auth/check-auth]
+      ["/name" {:get get-name}]]
      ["/about" {:get about-page}]]]])
 
 ;; Consumed by pedestal-rest.server/create-server
