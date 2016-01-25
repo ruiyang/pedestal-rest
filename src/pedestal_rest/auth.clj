@@ -1,13 +1,14 @@
 (ns pedestal-rest.auth
-  (:require [pedestal-rest.db.users :as u]
-            [io.pedestal.impl.interceptor :refer [terminate]]
-            [io.pedestal.interceptor.helpers :refer [defbefore defhandler]]
-            [clj-time.core :refer [hours from-now]]
-            [buddy.auth.protocols :as proto]
-            [buddy.sign.jwe :as jwe]
-            [buddy.core.nonce :as nonce]
-            [buddy.auth.backends.token :refer [jwe-backend]]
-            [buddy.auth.middleware :refer [wrap-authentication]]))
+  (:require  [clojure.tools.logging :as log]
+             [pedestal-rest.db.core :as db]
+             [io.pedestal.impl.interceptor :refer [terminate]]
+             [io.pedestal.interceptor.helpers :refer [defbefore defhandler]]
+             [clj-time.core :refer [hours from-now]]
+             [buddy.auth.protocols :as proto]
+             [buddy.sign.jwe :as jwe]
+             [buddy.core.nonce :as nonce]
+             [buddy.auth.backends.token :refer [jwe-backend]]
+             [buddy.auth.middleware :refer [wrap-authentication]]))
 
 (defonce secret (nonce/random-bytes 32))
 (def encryption {:alg :a256kw :enc :a128gcm})
@@ -35,6 +36,18 @@
 (def ^:private buddy-check-auth
   (wrap-authentication fake-handler auth-backend))
 
+(defbefore check-permission
+  [{:keys [request] :as context}]
+  (let [login-user (get-in request [:identity :user :name])
+        user-id-param (get-in request [:path-params :id])
+        users (db/get-user-by-login {:email login-user})
+        user (filter #(= (:id %) (Integer. user-id-param)) users)]
+    (if (not-empty user)
+      context
+      (-> context
+          terminate
+          (assoc :response {:status 401 :body {:message "Unauthorized resource access"}})))))
+
 (defbefore check-auth
   [{:keys [request] :as context}]
   (let [req-with-auth (buddy-check-auth request)]
@@ -42,4 +55,4 @@
       (assoc context :request req-with-auth)
       (-> context
           terminate
-          (assoc :response {:status 401 :body {:message (:identity "Unauthorized")}})))))
+          (assoc :response {:status 401 :body {:message "Unauthorized"}})))))

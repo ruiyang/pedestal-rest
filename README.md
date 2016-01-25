@@ -29,11 +29,27 @@ returns
 ```
 5. Endpoint protected by authentication
 ```shell
-curl -X GET -H 'Content-Type: application/json" }' -H 'Authorization: Token <token from step.4>' http://localhost:8080/user/10/name
+curl -X GET -H 'Content-Type: application/json" }' -H 'Authorization: Token <token from step.4>' http://localhost:8080/user/1/info
 ```
 returns
 ```json
 {
-    "name": "admin"
+    "id": 1,
+    "first_name": "first3",
+    "last_name": "last3",
+    "email": "admin",
+    "pass": "pass"
+}
+```
+```shell
+curl -X GET -H 'Content-Type: application/json" }' -H 'Authorization: Token <token from step.4>' http://localhost:8080/user/2/info
+```
+returns
+```json
+{
+    "status": 401,
+    "body": {
+        "message": "Unauthorized resource access"
+    }
 }
 ```

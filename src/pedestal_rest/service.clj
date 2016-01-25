@@ -5,7 +5,8 @@
             [io.pedestal.http.route.definition :refer [defroutes]]
             [io.pedestal.interceptor.helpers :as ph]
             [ring.util.response :as ring-resp]
-            [pedestal-rest.auth :as auth]))
+            [pedestal-rest.auth :as auth]
+            [pedestal-rest.db.core :as db]))
 
 (defn about-page
   [request]
@@ -15,9 +16,11 @@
   [request]
   {:message "Hello World!"})
 
-(ph/defhandler get-name
+(ph/defhandler get-user-info
   [request]
-  {:name (get-in request [:identity :user :name])})
+  (first
+   (db/get-user-by-login
+    {:email (get-in request [:identity :user :name])})))
 
 (ph/defon-response wrap-json-response [resp]
   (bootstrap/json-response resp))
@@ -26,8 +29,8 @@
   [[["/" {:get home-page}
      ^:interceptors [(body-params/body-params) wrap-json-response]
      ["/login" {:post auth/login}]
-     ["/user/:id" ^:interceptors [auth/check-auth]
-      ["/name" {:get get-name}]]
+     ["/user/:id" ^:interceptors [auth/check-auth auth/check-permission]
+      ["/info" {:get get-user-info}]]
      ["/about" {:get about-page}]]]])
 
 ;; Consumed by pedestal-rest.server/create-server

@@ -11,7 +11,7 @@
 
 (defqueries "sql/queries.sql" {:connection conn})
 
-;; (create-user! {:first_name "first3" :last_name "last3" :email "abc@gmail.com", :pass "pass"})
+;; (create-user! {:first_name "first3" :last_name "last3" :email "admin", :pass "pass"})
 
 ;; (def all (get-all-users))
 
