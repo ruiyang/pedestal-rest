@@ -14,25 +14,32 @@ A project build on clojure ecosystem. The aim is to compose different libraries 
 1. Start the application: `lein run-dev` \*
 2. Go to [localhost:8080](http://localhost:8080/) to see: `Hello World!`
 3. Endpoint without authentication
-```shell
+
+   ```shell
 curl -X GET -H 'Content-Type: application/json" }' http://localhost:8080/about
+```
 returns:
+   ```json
 {"message":"pedestal-rest: a single page app backend."}
 ```
+
 4. Endpoint to login /login
-```shell
+
+   ```shell
 curl -X POST -H 'Content-Type: application/json" }' -d '{"username": "admin", "password": "admin"}' http://localhost:8080/login
 ```
 returns
-```json
+   ```json
 {"status":200,"body":{"token": <encryped jwe token>}}
 ```
+
 5. Endpoint protected by authentication
-```shell
+
+   ```shell
 curl -X GET -H 'Content-Type: application/json" }' -H 'Authorization: Token <token from step.4>' http://localhost:8080/user/1/info
 ```
 returns
-```json
+   ```json
 {
     "id": 1,
     "first_name": "first3",
@@ -41,11 +48,11 @@ returns
     "pass": "pass"
 }
 ```
-```shell
+   ```shell
 curl -X GET -H 'Content-Type: application/json" }' -H 'Authorization: Token <token from step.4>' http://localhost:8080/user/2/info
 ```
 returns
-```json
+   ```json
 {
     "status": 401,
     "body": {
