@@ -7,6 +7,8 @@ A project build on clojure ecosystem. The aim is to compose different libraries 
 - [ ] Authorization
 - [x] DB access
 - [x] Data migration
+- [ ] Dev/prod profile
+- [ ] Schema everything
 - [ ] Logging
 
 ## Getting Started
