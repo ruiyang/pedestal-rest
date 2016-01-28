@@ -19,11 +19,11 @@
 (defhandler login
   [{:keys [json-params] :as request}]
   (let [{:keys [username password]} json-params
-        [user] (u/get-user username)
-        valid? (= (:pwd user) password)]
+        user (db/get-user username)
+        valid? (= (:pass user) password)]
     (if-not valid?
       {:status 401 :body {:message "Wrong credentials"}}
-      (let [info user
+      (let [info {:name (:email user)}
             claims {:user info
                     :exp (-> 3 hours from-now)}
             token (jwe/encrypt claims secret encryption)]
@@ -40,9 +40,9 @@
   [{:keys [request] :as context}]
   (let [login-user (get-in request [:identity :user :name])
         user-id-param (get-in request [:path-params :id])
-        users (db/get-user-by-login {:email login-user})
-        user (filter #(= (:id %) (Integer. user-id-param)) users)]
-    (if (not-empty user)
+        user (db/get-user login-user)
+        valid (= (:id user) (Integer. user-id-param))]
+    (if valid
       context
       (-> context
           terminate

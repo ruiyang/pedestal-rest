@@ -26,7 +26,7 @@ returns:
 4. Endpoint to login /login
 
    ```shell
-curl -X POST -H 'Content-Type: application/json" }' -d '{"username": "admin", "password": "admin"}' http://localhost:8080/login
+curl -X POST -H 'Content-Type: application/json" }' -d '{"username": "david@hudson.com", "password": "1234"}' http://localhost:8080/login
 ```
 returns
    ```json
@@ -42,10 +42,11 @@ returns
    ```json
 {
     "id": 1,
-    "first_name": "first3",
-    "last_name": "last3",
-    "email": "admin",
-    "pass": "pass"
+    "id": 1,
+    "first_name": "david",
+    "last_name": "hudson",
+    "email": "david@hudson.com",
+    "pass": "1234"
 }
 ```
    ```shell

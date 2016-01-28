@@ -11,8 +11,17 @@
 
 (defqueries "sql/queries.sql" {:connection conn})
 
-;; (create-user! {:first_name "first3" :last_name "last3" :email "admin", :pass "pass"})
+(defn get-user
+  [uname]
+  (first
+   (get-user-by-login {:email uname})))
 
-;; (def all (get-all-users))
+(comment
 
-;; (:first_name (last all))
+  (do
+    (create-user! {:first_name "david" :last_name "hudson" :email "david@hudson.com", :pass "1234"})
+    (create-user! {:first_name "david2" :last_name "hudson2" :email "david2@hudson.com", :pass "1234"})
+    (create-user! {:first_name "david3" :last_name "hudson3" :email "david3@hudson.com", :pass "1234"}))
+  (get-user-by-login {:email "david@hudson.com"})
+
+  )
