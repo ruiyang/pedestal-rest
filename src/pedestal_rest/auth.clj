@@ -8,7 +8,8 @@
              [buddy.sign.jwe :as jwe]
              [buddy.core.nonce :as nonce]
              [buddy.auth.backends.token :refer [jwe-backend]]
-             [buddy.auth.middleware :refer [wrap-authentication]]))
+             [buddy.auth.middleware :refer [wrap-authentication]]
+             [buddy.hashers :as hashers]))
 
 (defonce secret (nonce/random-bytes 32))
 (def encryption {:alg :a256kw :enc :a128gcm})
@@ -20,7 +21,7 @@
   [{:keys [json-params] :as request}]
   (let [{:keys [username password]} json-params
         user (db/get-user username)
-        valid? (= (:pass user) password)]
+        valid? (hashers/check password (:pass user))]
     (if-not valid?
       {:status 401 :body {:message "Wrong credentials"}}
       (let [info {:name (:email user)}

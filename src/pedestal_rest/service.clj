@@ -6,7 +6,8 @@
             [io.pedestal.interceptor.helpers :as ph]
             [ring.util.response :as ring-resp]
             [pedestal-rest.auth :as auth]
-            [pedestal-rest.db.core :as db]))
+            [pedestal-rest.db.core :as db]
+            [buddy.hashers :as hashers]))
 
 (defn about-page
   [request]
@@ -25,10 +26,19 @@
 (ph/defon-response wrap-json-response [resp]
   (bootstrap/json-response resp))
 
+(ph/defhandler register-user
+  [{:keys [json-params] :as request}]
+  (let [{:keys [email password]} json-params]
+    (db/create-user! {:email email
+                      :pass (hashers/encrypt password)
+                      :first_name ""
+                      :last_name ""})))
+
 (defroutes routes
   [[["/" {:get home-page}
      ^:interceptors [(body-params/body-params) wrap-json-response]
      ["/login" {:post auth/login}]
+     ["/user" {:post register-user}]
      ["/user/:id" ^:interceptors [auth/check-auth auth/check-permission]
       ["/info" {:get get-user-info}]]
      ["/about" {:get about-page}]]]])

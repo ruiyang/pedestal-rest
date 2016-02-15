@@ -23,5 +23,4 @@
     (create-user! {:first_name "david2" :last_name "hudson2" :email "david2@hudson.com", :pass "1234"})
     (create-user! {:first_name "david3" :last_name "hudson3" :email "david3@hudson.com", :pass "1234"}))
   (get-user-by-login {:email "david@hudson.com"})
-
-  )
+  (get-all-users))

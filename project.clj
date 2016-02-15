@@ -17,6 +17,7 @@
                  [org.slf4j/jcl-over-slf4j "1.7.12"]
                  [org.slf4j/log4j-over-slf4j "1.7.12"]
                  [buddy/buddy-auth "0.9.0"]
+                 [buddy/buddy-hashers "0.11.0"]
                  [clj-time "0.11.0"]
                  [conman "0.2.9"]
 
