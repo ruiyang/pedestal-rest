@@ -21,7 +21,7 @@
   [{:keys [json-params] :as request}]
   (let [{:keys [username password]} json-params
         user (db/get-user username)
-        valid? (hashers/check password (:pass user))]
+        valid? (hashers/check password (:password user))]
     (if-not valid?
       {:status 401 :body {:message "Wrong credentials"}}
       (let [info {:name (:email user)}

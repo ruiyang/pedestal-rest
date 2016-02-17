@@ -30,7 +30,7 @@
   [{:keys [json-params] :as request}]
   (let [{:keys [email password]} json-params]
     (db/create-user! {:email email
-                      :pass (hashers/encrypt password)
+                      :password (hashers/encrypt password)
                       :first_name ""
                       :last_name ""})))
 
