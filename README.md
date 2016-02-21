@@ -11,6 +11,8 @@ A project build on clojure ecosystem. The aim is to compose different libraries 
 - [ ] Dev/prod profile
 - [ ] Schema everything
 - [ ] Logging
+- [ ] Redux setup
+- [ ] Assets compressing
 
 ## Getting Started
 
