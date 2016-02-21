@@ -3,4 +3,5 @@ tmp/
 logs/
 .lein-repl-history
 .nrepl-port
-db/*.db
+db
+.lein-env
