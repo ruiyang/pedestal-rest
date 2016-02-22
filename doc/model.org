@@ -1,0 +1,12 @@
+* User
+  - attr: email (unique), first_name, last_name, password (not null), create_date, last_modify_date
+* Item
+  - attr: user_id (foreign key), code, description, default_price, thumbnail, create_date, last_modify_date
+* Image
+  - attr: item_id (foreign key), image
+* Client
+  - attr: wei_id, user_id (foreign key), name (not null), create_date, last_modify_date
+* Order
+  - attr: client_id, user_id, create_date, last_modify_date
+* OrderItem:
+  - attr: order_id (foreign key), item_id (foreign key), quantity, price, create_date, last_modify_date
