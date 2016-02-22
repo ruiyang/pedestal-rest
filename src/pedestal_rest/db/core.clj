@@ -4,7 +4,7 @@
    [config.core :refer [env]]
    [mount.core :as mount]
    [conman.core :as conman]
-   [clojure.java.jdbc :as jdbc]
+   ;;   [clojure.java.jdbc :as jdbc]
    [pedestal-rest.db.model :as m]))
 
 (def pool-spec
@@ -34,22 +34,20 @@
 ;; (mount/start)
 ;; (mount/stop)
 
-;; (def c (connect!))
-
-;; (jdbc/with-db-connection [conn {:datasource c}]
-;;     (let [rows (jdbc/insert! conn "user" {:first_name "first"})]
-;;       (println rows)))
-
-
-;; (jdbc/with-db-connection [conn {:datasource c}]
-;;     (let [rows (jdbc/query conn "select * from user")]
-;;       (println rows)))
+;; (jdbc/with-db-transaction [test-tran @*db*]
+;;   (prn (jdbc/db-is-rollback-only test-tran))
+;;   (jdbc/db-set-rollback-only! test-tran)
+;;   (prn test-tran)
+;;   (create-user! {:first_name "david5" :last_name "hudson5" :email "david5@hudson.com", :password "1234"} test-tran)
+;;   (count (get-all-users)))
 
 (defn get-user
   [uname]
-  (m/map->user
-   (first
-    (get-user-by-login {:email uname}))))
+  (let [user (first
+              (get-user-by-login {:email uname}))]
+    (if user
+      (m/map->user user)
+      nil)))
 
 (comment
   (do
@@ -57,4 +55,5 @@
     (create-user! {:first_name "david2" :last_name "hudson2" :email "david2@hudson.com", :password "1234"})
     (create-user! {:first_name "david3" :last_name "hudson3" :email "david3@hudson.com", :password "1234"}))
   (get-user-by-login {:email "david@hudson.com"})
+  (get-user "david@hudson.com")
   (get-all-users))
