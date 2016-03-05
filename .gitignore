@@ -5,3 +5,4 @@ logs/
 .nrepl-port
 db
 .lein-env
+**/node_modules/
