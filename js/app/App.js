@@ -1,12 +1,8 @@
 'use strict';
 
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import ListContainer from './ListContainer';
-import * as TodoActions from './actions/todoActions';
-
-
+import { Link } from 'react-router';
 function mapStateToProps(state) {
   return state;
 }
@@ -15,18 +11,22 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.actions = bindActionCreators(TodoActions, props.dispatch);
   }
 
   componentWillMount() {
-    this.actions.getTodos();
   }
 
   render () {
     return (
-      <div className="container">
-        <div className="row">
-          <ListContainer model={this.props.todos} actions={this.actions} />
+      <div className='container'>
+        <div className='row'>
+          {this.props.children}
+          <Link to='/test' >
+            Go To Test Page
+          </Link>
+          <Link to='/login' >
+            Go To Login
+          </Link>
         </div>
       </div>
     );

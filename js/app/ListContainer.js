@@ -12,7 +12,9 @@ export default class ListContainer extends React.Component {
         <div className="col-sm-12">
           <h3 className="text-center"> Todo List</h3>
           <AddItem actions={this.props.actions} />
-          <List model={this.props.model} actions={this.props.actions}/>
+          <List
+            model={this.props.model}
+            actions={this.props.actions}/>
         </div>
       </div>
     );

@@ -17,7 +17,9 @@ export default class List extends React.Component {
             onClick={this._remove.bind(this, index)}>
           </span>
           <span className="index">- {index} - </span>
-          <span className="content">{ item.get('text') } {'   complete: '} { item.get('complete') }</span>
+          <span className="content">
+            { item.get('text') } {'   complete: '} { item.get('complete') }
+          </span>
         </li>
       );
     }.bind(this));
