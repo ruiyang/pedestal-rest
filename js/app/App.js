@@ -18,20 +18,23 @@ class App extends React.Component {
 
   render () {
     return (
-      <div className='container'>
+      <div className='container-fluid'>
+        {this.props.children}
         <div className='row'>
-          {this.props.children}
-          <Link to='/test' >
-            Go To Test Page
-          </Link>
-          <Link to='/login' >
-            Go To Login
-          </Link>
+          <div className='col-xs-4 col-md-4 col-xs-4 col-xs-offset-2 col-md-offset-2 col-xs-offset-2'>
+            <Link to='/test' >
+              Go To Test Page
+            </Link>
+          </div>
+          <div className='col-xs-4 col-md-4 col-xs-4 col-xs-offset-1 col-md-offset-1 col-xs-offset-1'>
+            <Link to='/login' >
+              Go To Login
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
-
 }
 
 export default connect (mapStateToProps)(App);
