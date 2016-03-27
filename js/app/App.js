@@ -2,9 +2,18 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { doLogin } from './actions/loginActions';
+
 function mapStateToProps(state) {
   return state;
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onLoginClick: (username, password) => {
+      dispatch(doLogin(username, password));
+    }
+  };
 }
 
 class App extends React.Component {
@@ -19,22 +28,10 @@ class App extends React.Component {
   render () {
     return (
       <div className='container-fluid'>
-        {this.props.children}
-        <div className='row'>
-          <div className='col-xs-4 col-md-4 col-xs-4 col-xs-offset-2 col-md-offset-2 col-xs-offset-2'>
-            <Link to='/test' >
-              Go To Test Page
-            </Link>
-          </div>
-          <div className='col-xs-4 col-md-4 col-xs-4 col-xs-offset-1 col-md-offset-1 col-xs-offset-1'>
-            <Link to='/login' >
-              Go To Login
-            </Link>
-          </div>
-        </div>
+        {React.cloneElement(this.props.children, Object.assign({}, this.props))}
       </div>
     );
   }
 }
 
-export default connect (mapStateToProps)(App);
+export default connect (mapStateToProps, mapDispatchToProps)(App);

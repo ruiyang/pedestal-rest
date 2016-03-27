@@ -3,8 +3,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import LoginPage from './Login';
-import TestPage from './TestPage';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Dashboard from './components/Dashboard';
 import { Provider } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router';
 import store from './store/todoStore';
@@ -16,8 +17,9 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <Route path="/login" component={LoginPage}/>
-        <Route path="/test" component={TestPage}/>
+        <Route path="/login" component={Login}/>
+        <Route path="/signup" component={Signup}/>
+        <Route path="/dashboard" component={Dashboard}/>
       </Route>
     </Router>
   </Provider>,
