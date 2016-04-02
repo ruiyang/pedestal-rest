@@ -1,4 +1,3 @@
-import {todos, filter} from '../reducers/index';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import {combineReducers, createStore, applyMiddleware} from 'redux';
@@ -11,7 +10,7 @@ const createStoreWithMiddleware = applyMiddleware(
   loggerMiddleware
 )(createStore);
 
-let reducers = combineReducers({todos, filter, routing: routerReducer});
+let reducers = combineReducers({routing: routerReducer});
 
 const store = createStoreWithMiddleware(reducers);
 

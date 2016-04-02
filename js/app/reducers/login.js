@@ -1,4 +1,6 @@
-import * from './actions/loginActions';
+'use strict';
+
+import { * } from '../actions/loginActions';
 
 import Immutable from 'immutable';
 const defaultState = Immutable.List();
