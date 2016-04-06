@@ -1,5 +1,5 @@
 "use strict";
-require('babel-core/polyfill');
+
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
@@ -13,7 +13,7 @@ var config = require('./make-webpack-config')({
   },
 
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, '../public/assets/js'),
     filename: '[name].js',
     publicPath: '/public'
   },

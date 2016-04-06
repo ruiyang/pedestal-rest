@@ -11,16 +11,22 @@ A project build on clojure ecosystem. The aim is to compose different libraries 
 - [ ] Dev/prod profile
 - [ ] Schema everything
 - [ ] Logging
-- [ ] Redux setup
+- [x] Redux setup
 - [ ] Assets compressing
 
 ## Getting Started
+1. Start webpack
+```shell
+cd js
+npm install
+webpack --progress --colors --watch
+```
+2. Start the application: `lein run-dev`
+3. Go to [localhost:8080](http://localhost:8080/) to see: `Hello World!`
+4. Go to [localhost:8080/index.html#/login](http://localhost:8080/index.html#/login) to see login screen
+5. Endpoint without authentication
 
-1. Start the application: `lein run-dev` \*
-2. Go to [localhost:8080](http://localhost:8080/) to see: `Hello World!`
-3. Endpoint without authentication
-
-   ```shell
+```shell
 curl -X GET -H 'Content-Type: application/json" }' http://localhost:8080/about
 ```
 returns:
@@ -54,7 +60,7 @@ returns
     "pass": "1234"
 }
 ```
-   ```shell
+```shell
 curl -X GET -H 'Content-Type: application/json" }' -H 'Authorization: Token <token from step.4>' http://localhost:8080/user/2/info
 ```
 returns
@@ -66,3 +72,5 @@ returns
     }
 }
 ```
+## NOTES:
+- I installed node with nvm, you will need to add "./node_modules/.bin" to path

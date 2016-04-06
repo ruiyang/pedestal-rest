@@ -32,7 +32,7 @@
   :min-lein-version "2.0.0"
   :plugins [[migratus-lein "0.2.0"]
             [lein-environ "1.0.1"]]
-  :resource-paths ["config", "resources", "db"] ;; db should be dev resources
+  :resource-paths ["config", "resources", "db", "public"] ;; db should be dev resources
   :profiles {:dev
              {:aliases {"run-dev" ["trampoline" "run" "-m" "pedestal-rest.server/run-dev"]}
               :dependencies [[io.pedestal/pedestal.service-tools "0.4.1"]]
