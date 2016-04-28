@@ -1,0 +1,20 @@
+* comments from others setting up figwheel and backend
+@rui.yang: I had the exact same problem a few weeks ago! Are you already using http-kit or jetty or any webserver for the backend, or were you like me and tried to go as long as possible using figwheel itself to run the backend :stuck_out_tongue: ? (edited)
+
+[12:10]
+So my setup (I've been meaning to write this up but haven't yet, so this might be a bit rough): in `project.clj` `defproject`, I have `:main app.handler`, and in `src/clj/app/handler.clj` I have set up my Compojure app as well as http-kit startup.
+
+[12:11]
+So `lein run` will start the backend and start serving
+
+[12:13]
+I also have a Compojure route: `(route/resources "/")` so that http://localhost:3600/index.html (in your case, 8080 will be the port) will load index.html and pull down whatever cljs assets have been built by `lein fighweel dev`.
+
+[12:15]
+When you open that URL, the browser will try to connect to the figwheel websocket (http://localhost:3449) once a second, and will console.error if it can't reach it. If you run `lein figwheel dev`, that starts up figwheel's server, and your client connects to it and figwheel is running. (edited)
+
+[12:18]
+So I have two terminals, one running `lein run` and another running `lein fighweel dev`. (The third is a `lein repl` connected to the nrepl server running inside my app :smile:) (edited)
+
+[12:20]
+This whole aspect of Clojure/Script was really confusing for me to figure out, and I'm sure the above was unclear so let me know where I can clarify. I would like to make a stand-alone repo showing how I at least do this… after my deadline next week

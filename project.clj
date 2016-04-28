@@ -28,21 +28,46 @@
 
                  ;; possible dev profile dependency
                  [migratus "0.8.8"]
-                 [com.h2database/h2 "1.4.190"]]
+                 [com.h2database/h2 "1.4.190"]
+
+                 ;; cljs frontend stuff
+                 [reagent "0.5.1"]
+                 [re-frame "0.7.0"]
+                 [secretary "1.2.3"]]
   :min-lein-version "2.0.0"
   :plugins [[migratus-lein "0.2.0"]
-            [lein-environ "1.0.1"]]
+            [lein-environ "1.0.1"]
+            [lein-figwheel "0.5.0-1"]]
   :resource-paths ["config", "resources", "db", "public"] ;; db should be dev resources
+  :source-paths ["src/clj"]
   :profiles {:dev
              {:aliases {"run-dev" ["trampoline" "run" "-m" "pedestal-rest.server/run-dev"]}
-              :dependencies [[io.pedestal/pedestal.service-tools "0.4.1"]]
-              :env {:database-url "jdbc:h2:./db/my-webapp"}}
+              :dependencies [[io.pedestal/pedestal.service-tools "0.4.1"]
+                             [com.cemerick/piggieback "0.2.1"]
+                             [org.clojure/tools.nrepl "0.2.11"]
+                             [figwheel-sidecar "0.5.2"]]
+              :env {:database-url "jdbc:h2:./db/my-webapp"}
+              :source-paths ["src/cljs"]}
              :uberjar {:aot [pedestal-rest.server]}
              :test {:env
                     {:database-url  "jdbc:h2:./db/my-webapp-test"}}}
+
+  :cljsbuild {:builds
+              [{:id "dev"
+                :source-paths ["src/cljs"] ;;<--- note this isn't in source-paths above
+                :figwheel {:on-jsload "pedestal-frontend.core/mount-root"}
+                :compiler {:main pedestal-frontend.core
+                           :asset-path "js/out"
+                           :output-to "resources/public/js/app.js"
+                           :output-dir "resources/public/js/out" }}]}
+
+  :figwheel {:css-dirs ["resources/public/css"]}
+
   :main ^{:skip-aot true} pedestal-rest.server
+
   :migratus {:store :database
              :migration-dir "migrations"
              :db  {:classname "org.h2.Driver"
                    :subprotocol "h2:file"
-                   :subname "./db/my-webapp"}})
+                   :subname "./db/my-webapp"}}
+  )
