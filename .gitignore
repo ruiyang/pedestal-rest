@@ -8,4 +8,3 @@ db
 .lein-env
 **/node_modules/
 *.log
-resources/public/js/*
