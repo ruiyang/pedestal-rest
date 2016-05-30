@@ -38,7 +38,7 @@
   :plugins [[migratus-lein "0.2.0"]
             [lein-environ "1.0.1"]
             [lein-figwheel "0.5.0-1"]]
-  :resource-paths ["config", "resources", "db", "public"] ;; db should be dev resources
+  :resource-paths ["config", "resources", "db"] ;; db should be dev resources
   :source-paths ["src/clj"]
   :profiles {:dev
              {:aliases {"run-dev" ["trampoline" "run" "-m" "pedestal-rest.server/run-dev"]}
