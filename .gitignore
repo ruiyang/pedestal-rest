@@ -8,3 +8,4 @@ db
 .lein-env
 **/node_modules/
 *.log
+.sass-cache
