@@ -7,7 +7,8 @@
             [ring.util.response :as ring-resp]
             [pedestal-rest.auth :as auth]
             [pedestal-rest.db.core :as db]
-            [buddy.hashers :as hashers]))
+            [buddy.hashers :as hashers]
+            [clojure.tools.logging :as log]))
 
 (defn about-page
   [request]
@@ -23,9 +24,6 @@
    (db/get-user-by-login
     {:email (get-in request [:identity :user :name])})))
 
-(ph/defon-response wrap-json-response [resp]
-  (bootstrap/json-response resp))
-
 (ph/defhandler register-user
   [{:keys [json-params] :as request}]
   (let [{:keys [email password]} json-params]
@@ -36,7 +34,7 @@
 
 (defroutes routes
   [[["/" {:get home-page}
-     ^:interceptors [(body-params/body-params) wrap-json-response]
+     ^:interceptors [(body-params/body-params) bootstrap/json-body]
      ["/login" {:post auth/login}]
      ["/user" {:post register-user}]
      ["/user/:id" ^:interceptors [auth/check-auth auth/check-permission]
