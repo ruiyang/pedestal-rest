@@ -7,8 +7,9 @@
  :login
  (fn [db [_ username password]]
    (ajax/POST "http://localhost:8080/login"
-              {:json {:username username
-                      :password password}
+              {:params {:username username
+                        :password password}
+               :format (ajax/json-request-format)
                :response-format :json
                :keywords? true
                :handler #(utils/navigate-to "/")
