@@ -48,7 +48,7 @@
                              [org.clojure/tools.nrepl "0.2.11"]
                              [figwheel-sidecar "0.5.2"]]
               :env {:database-url "jdbc:h2:./db/my-webapp"}
-              :source-paths ["src/cljs"]}
+              :source-paths ["src/cljs" "dev/clj"]}
              :uberjar {:aot [pedestal-rest.server]}
              :test {:env
                     {:database-url  "jdbc:h2:./db/my-webapp-test"}}}
