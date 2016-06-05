@@ -4,7 +4,7 @@ tmp/
 logs/
 .lein-repl-history
 .nrepl-port
-db
+db/*
 .lein-env
 **/node_modules/
 *.log
