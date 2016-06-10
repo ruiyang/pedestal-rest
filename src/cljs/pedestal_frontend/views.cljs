@@ -16,6 +16,7 @@
 
 (defmulti panels identity)
 (defmethod panels :home-panel [] [dashboard/home-panel])
+(defmethod panels :orders [] [dashboard/order-management-view])
 (defmethod panels :about-panel [] [about-panel])
 (defmethod panels :login-panel [] [login/login-panel])
 (defmethod panels :default [] [:div])

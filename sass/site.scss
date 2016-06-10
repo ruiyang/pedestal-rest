@@ -1,9 +1,15 @@
 html, body, .container-table {
   height: 100%;
 }
+
+body {
+  padding-top: 50px;
+}
+
 .container-table {
   display: table;
 }
+
 .login {
   margin-top: 40px;
   vertical-align: middle;

@@ -27,6 +27,8 @@
   (defroute "/login" []
     (re-frame/dispatch [:set-active-panel :login-panel]))
 
+  (defroute "/orders" []
+    (re-frame/dispatch [:set-active-panel :orders]))
 
   ;; --------------------
   (hook-browser-navigation!))

@@ -41,10 +41,16 @@
 ;;   (create-user! {:first_name "david5" :last_name "hudson5" :email "david5@hudson.com", :password "1234"} test-tran)
 ;;   (count (get-all-users)))
 
-(defn get-user
-  [uname]
+(defn get-user [uname]
   (let [user (first
               (get-user-by-login {:email uname}))]
     (if user
       (m/map->user user)
       nil)))
+
+(defn get-business-by-user-id [user_id]
+  (first
+   (get-business-by-user {:user_id user_id})))
+
+(defn get-items [business_id]
+  (get-items-by-business {:business_id business_id}))
