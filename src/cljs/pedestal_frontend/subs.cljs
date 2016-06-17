@@ -11,3 +11,9 @@
  :active-panel
  (fn [db _]
    (reaction (:active-panel @db))))
+
+(re-frame/register-sub
+ :model
+  (fn [db [_]]       ;; the handler for the subscription
+   (reaction
+    (get-in @db [:model]))))

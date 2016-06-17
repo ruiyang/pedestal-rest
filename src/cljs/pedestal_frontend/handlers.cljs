@@ -1,5 +1,5 @@
 (ns pedestal-frontend.handlers
-  (:import goog.History)
+  (:require-macros [reagent.ratom :refer [reaction]])  ;; reaction is a macro
   (:require [re-frame.core :as re-frame]
             [pedestal-frontend.db :as db]
             [ajax.core :as ajax]
@@ -15,3 +15,8 @@
  :set-active-panel
  (fn [db [_ active-panel]]
    (assoc db :active-panel active-panel)))
+
+(re-frame/register-handler
+ :update-model
+ (fn [db [_ keys value]]
+   (assoc-in db keys value)))

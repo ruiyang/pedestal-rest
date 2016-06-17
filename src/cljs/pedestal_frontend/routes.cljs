@@ -3,6 +3,7 @@
     (:import goog.History)
     (:require [secretary.core :as secretary]
               [goog.events :as events]
+              [goog.dom :as dom]
               [goog.history.EventType :as EventType]
               [re-frame.core :as re-frame]))
 
@@ -29,6 +30,12 @@
 
   (defroute "/orders" []
     (re-frame/dispatch [:set-active-panel :orders]))
+
+  (defroute "/items" []
+    (re-frame/dispatch [:set-active-panel :items]))
+
+  (defroute "/items/new" []
+    (re-frame/dispatch [:set-active-panel :add-item]))
 
   ;; --------------------
   (hook-browser-navigation!))

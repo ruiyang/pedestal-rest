@@ -48,7 +48,6 @@
 
 (comment
   {:user
-   {
-    :user_name "dev"
+   {:user_name "dev"
     :business "business"
     }})

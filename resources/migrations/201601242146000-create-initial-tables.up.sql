@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS Business(id IDENTITY, user_id INT, business_name VARC
 
 CREATE TABLE IF NOT EXISTS UserBusiness(id IDENTITY, user_id INT, business_id INT, FOREIGN KEY (user_id) REFERENCES User(id), FOREIGN KEY (business_id) REFERENCES Business(id));
 
-CREATE TABLE IF NOT EXISTS Item(id IDENTITY, business_id INT NOT NULL, code VARCHAR(50), description VARCHAR(250), price DECIMAL(10,2), stock INT NULL DEFAULT(0), thumbnail BINARY, create_date TIMESTAMP, last_modify_date TIMESTAMP,FOREIGN KEY (business_id) REFERENCES Business(id));
+CREATE TABLE IF NOT EXISTS Item(id IDENTITY, business_id INT NOT NULL, item_name VARCHAR(150), code VARCHAR(50), description VARCHAR(1000), price DECIMAL(10,2), stock INT NULL DEFAULT(0), thumbnail BINARY, create_date TIMESTAMP, last_modify_date TIMESTAMP,FOREIGN KEY (business_id) REFERENCES Business(id));
 
 CREATE TABLE IF NOT EXISTS Image(id IDENTITY, item_id INT NOT NULL, image BINARY, FOREIGN KEY (ITEM_ID) references Item(id));
 

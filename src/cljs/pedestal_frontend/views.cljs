@@ -3,6 +3,8 @@
             [ajax.core :as ajax]
             [pedestal-frontend.pages.login.login-view :as login]
             [pedestal-frontend.pages.dashboard.dashboard-view :as dashboard]
+            [pedestal-frontend.pages.item.item-view :as items]
+            [pedestal-frontend.pages.item.new-item-view :as new-items]
             [pedestal-frontend.pages.utils :as utils]))
 
 ;; about
@@ -17,6 +19,8 @@
 (defmulti panels identity)
 (defmethod panels :home-panel [] [dashboard/home-panel])
 (defmethod panels :orders [] [dashboard/order-management-view])
+(defmethod panels :items [] [items/item-list-view])
+(defmethod panels :add-item [] [new-items/new-item-view])
 (defmethod panels :about-panel [] [about-panel])
 (defmethod panels :login-panel [] [login/login-panel])
 (defmethod panels :default [] [:div])

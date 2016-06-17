@@ -1,19 +1,21 @@
 (ns pedestal-frontend.pages.login.login-view
+  (:require-macros [reagent.ratom :refer [reaction]])
   (:require [re-frame.core :as re-frame]
             [reagent.core  :as reagent]
             [pedestal-frontend.form :as f]))
 
 ;; login
 (defn login-panel []
-  (let [username (reagent/atom nil)
-        password (reagent/atom nil)]
+  (let [model (re-frame/subscribe [:model])
+        username (reaction (:username @model))
+        password  (reaction (:password @model))]
     (fn []
       [:div.container.container-table
        [:div.login.form-horizontal
         [:div.form-group
-         (f/form-input username {:type "email" :id "username" :placeholder "Enter user name"})]
+         (f/form-input username [:model :username] {:type "email" :id "username" :placeholder "Enter user name"})]
         [:div.form-group
-         (f/form-input password {:type "text" :id "password" :placeholder "Password"})]]
+         (f/form-input password [:model :password] {:type "text" :id "password" :placeholder "Password"})]]
         [:div.form-group
          [:button.btn.btn-lg.btn-primary.btn-block
           {:on-click #(re-frame/dispatch [:login @username @password])}
