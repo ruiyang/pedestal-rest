@@ -34,9 +34,9 @@
       )))
 
 (defn clean-db []
+  (jdbc/delete! @db/*db* :item "")
   (jdbc/delete! @db/*db* :userbusiness "")
   (jdbc/delete! @db/*db* :business "")
-  (jdbc/delete! @db/*db* :item "")
   (jdbc/delete! @db/*db* :user ""))
 
 (comment
@@ -44,7 +44,6 @@
     (db/get-user-by-login {:email "dev2"})
     (db/get-user "dev")
     (db/get-all-users)))
-
 
 (comment
   {:user
