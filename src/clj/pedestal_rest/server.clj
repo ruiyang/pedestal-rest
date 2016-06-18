@@ -1,4 +1,5 @@
 (ns pedestal-rest.server
+
   (:gen-class) ; for -main method in uberjar
   (:require [io.pedestal.http :as server]
             [pedestal-rest.service :as service]))

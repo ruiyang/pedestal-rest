@@ -8,7 +8,8 @@
             [pedestal-rest.auth :as auth]
             [pedestal-rest.db.core :as db]
             [buddy.hashers :as hashers]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log]
+            [pedestal-rest.handlers.items :as items]))
 
 (defn about-page
   [request]
@@ -39,6 +40,7 @@
      ["/user" {:post register-user}]
      ["/user/:id" ^:interceptors [auth/check-auth auth/check-permission]
       ["/info" {:get get-user-info}]]
+     ["/business/:id/items" {:post items/add-item}]
      ["/about" {:get about-page}]]]])
 
 ;; Consumed by pedestal-rest.server/create-server

@@ -4,6 +4,7 @@
             [pedestal-frontend.db :as db]
             [ajax.core :as ajax]
             [pedestal-frontend.pages.login.login-handlers]
+            [pedestal-frontend.pages.item.item-handlers]
             [secretary.core :as secretary]))
 
 (re-frame/register-handler
@@ -19,4 +20,5 @@
 (re-frame/register-handler
  :update-model
  (fn [db [_ keys value]]
-   (assoc-in db keys value)))
+   (let [new-db (assoc-in db (into [:model :data] keys) value)]
+     new-db)))
