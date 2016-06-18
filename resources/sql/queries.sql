@@ -7,12 +7,12 @@ VALUES (:first_name, :last_name, :email, :password)
 
 -- name: get-all-users
 -- get all users
-select id, first_name, last_name, email, password from user
+select id, user_name, first_name, last_name, email, password from user
 
 
 -- name: get-user-by-login
 -- get user by user's login
-select id, first_name, last_name, email, password from user where email = :email
+select id, user_name, first_name, last_name, email, password from user where email = :email
 
 -- name: add-business!
 -- add a business for a user
