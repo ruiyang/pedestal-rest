@@ -18,5 +18,5 @@
          (f/form-input password [:password] {:type "text" :id "password" :placeholder "Password"})]]
         [:div.form-group
          [:button.btn.btn-lg.btn-primary.btn-block
-          {:on-click #(re-frame/dispatch [:login @username @password])}
+          {:on-click #(re-frame/dispatch [:login])}
           "Login"]]])))
