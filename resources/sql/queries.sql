@@ -27,7 +27,7 @@ SELECT * FROM business WHERE user_id = :user_id
 
 -- name: add-item!
 -- add an item for a user
-INSERT INTO item (business_id, code, description, price, stock, create_date, last_modify_date) VALUES(:business_id, :code, :description, :price, :stock, :create_date, :last_modify_date)
+INSERT INTO item (business_id, item_name, code, description, price, stock, create_date, last_modify_date) VALUES(:business_id, :item_name, :code, :description, :price, :stock, :create_date, :last_modify_date)
 
 -- name: get-items-by-business
 -- get the list of items of a business

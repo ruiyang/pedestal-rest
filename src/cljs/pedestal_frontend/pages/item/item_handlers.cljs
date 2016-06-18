@@ -6,7 +6,7 @@
 (re-frame/register-handler
  :initialize-new-item
  (fn [db [_]]
-   (let [ new-db  (assoc-in db [:model] {:url "http://localhost:8080/businessid/1/items"
+   (let [ new-db  (assoc-in db [:model] {:url "http://localhost:8080/business/8/items"
                                          :data {}})]
      new-db)))
 
@@ -19,5 +19,5 @@
                 :response-format :json
                 :keywords? true
                 :handler #(utils/navigate-to "/")
-                :error-handler  #(utils/navigate-to "/login")})
+                })
     db))

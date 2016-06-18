@@ -15,6 +15,7 @@
           b1 (db/get-business-by-user-id (:id (db/get-user "dev")))
           b2 (db/get-business-by-user-id (:id u2))
           u1-i1 (db/add-item! {:business_id (:id b1)
+                               :item_name "item 1"
                                :description "item1 desc"
                                :code "1234"
                                :price 50
@@ -23,6 +24,7 @@
                                :last_modify_date "2016-05-05"
                                })
           u1-i2 (db/add-item! {:business_id (:id b1)
+                               :item_name "item2"
                                :description "item2 desc"
                                :code "2345"
                                :price 30
@@ -43,6 +45,7 @@
   (do
     (db/get-user-by-login {:email "dev2"})
     (db/get-user "dev")
+    (db/get-business-by-user-id (:id  (db/get-user "dev")))
     (db/get-all-users)))
 
 (comment

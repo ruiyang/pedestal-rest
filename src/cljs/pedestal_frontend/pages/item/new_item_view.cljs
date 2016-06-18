@@ -14,10 +14,10 @@
         stock (reaction (:stock @model))]
     (fn []
       [:div.form-horizontal {:role "form"}
-       (f/form-input item-name [:item-name] {})
-       (f/form-input code [:code] {})
-       (f/form-input price [:price] {})
-       (f/form-input stock [:stock] {})
+       (f/form-input-with-label "Name:" item-name [:item-name] {})
+       (f/form-input-with-label "Code:" code [:code] {})
+       (f/form-input-with-label "Price:" price [:price] {})
+       (f/form-input-with-label "Stock:" stock [:stock] {})
        ])))
 
 (defn add-item []
