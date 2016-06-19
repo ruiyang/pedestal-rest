@@ -4,13 +4,11 @@
             [io.pedestal.http.body-params :as body-params]
             [io.pedestal.http.route.definition :refer [defroutes]]
             [io.pedestal.interceptor.helpers :as ph]
-            [ring.util.response :as ring-resp]
             [pedestal-rest.auth :as auth]
             [pedestal-rest.db.core :as db]
             [buddy.hashers :as hashers]
             [clojure.tools.logging :as log]
             [pedestal-rest.handlers.items :as items]))
-
 (defn about-page
   [request]
   {:message "pedestal-rest: a single page app backend."})
@@ -33,9 +31,12 @@
                       :first_name ""
                       :last_name ""})))
 
+(ph/defon-response wrap-json-response [resp]
+  (bootstrap/json-response resp))
+
 (defroutes routes
   [[["/" {:get home-page}
-     ^:interceptors [(body-params/body-params) bootstrap/json-body]
+     ^:interceptors [(body-params/body-params) wrap-json-response]
      ["/login" {:post auth/login}]
      ["/user" {:post register-user}]
      ["/user/:id" ^:interceptors [auth/check-auth auth/check-permission]
