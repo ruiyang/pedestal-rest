@@ -46,7 +46,7 @@
     (db/get-user-by-login {:email "dev2"})
     (db/get-user "dev")
     (db/get-business-by-user-id (:id  (db/get-user "dev")))
-    (count (db/get-items 4))
+    (count (db/get-items 3))
     (db/get-all-users)))
 
 (comment

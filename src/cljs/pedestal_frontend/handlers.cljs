@@ -22,3 +22,8 @@
  (fn [db [_ keys value]]
    (let [new-db (assoc-in db (into [:model :data] keys) value)]
      new-db)))
+
+(re-frame/register-handler
+ :set-model
+ (fn [db [_ model]]
+   (assoc-in db [:model :data] model)))

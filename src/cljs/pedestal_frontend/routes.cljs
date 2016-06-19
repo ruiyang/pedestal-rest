@@ -32,6 +32,7 @@
     (re-frame/dispatch [:set-active-panel :orders]))
 
   (defroute "/items" []
+    (re-frame/dispatch [:initialize-item-list])
     (re-frame/dispatch [:set-active-panel :items]))
 
   (defroute "/items/new" []

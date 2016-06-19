@@ -8,14 +8,16 @@
 
 (defn- add-item-form []
   (let [model (subscribe [:model-data])
-        item-name (reaction (:item-name @model))
+        item-name (reaction (:item_name @model))
         code (reaction (:code @model))
+        description (reaction (:description @model))
         price (reaction (:price @model))
         stock (reaction (:stock @model))]
     (fn []
       [:div.form-horizontal {:role "form"}
-       (f/form-input-with-label "Name:" item-name [:item-name] {})
+       (f/form-input-with-label "Name:" item-name [:item_name] {})
        (f/form-input-with-label "Code:" code [:code] {})
+       (f/form-input-with-label "Description:" description [:description] {})
        (f/form-input-with-label "Price:" price [:price] {})
        (f/form-input-with-label "Stock:" stock [:stock] {})
        ])))

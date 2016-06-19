@@ -4,20 +4,31 @@
             [pedestal-frontend.pages.utils :as utils]))
 
 (re-frame/register-handler
+ :initialize-item-list
+ (fn [db [_]]
+   (ajax/GET "http://localhost:8080/business/3/items"
+             {:response-format :json
+              :keywords? true
+              :handler #(re-frame/dispatch [:set-model %])
+              })
+   (assoc-in db [:model] {:url "http://localhost:8080/business/3/items"
+                          :data {}})))
+
+
+(re-frame/register-handler
  :initialize-new-item
  (fn [db [_]]
-   (let [ new-db  (assoc-in db [:model] {:url "http://localhost:8080/business/8/items"
-                                         :data {}})]
-     new-db)))
+  (assoc-in db [:model] {:url "http://localhost:8080/business/3/items"
+                                         :data {}})))
 
- (re-frame/register-handler
-  :create-model
-  (fn [db [_]]
-    (ajax/POST (get-in db [:model :url])
-               {:params (get-in db [:model :data])
-                :format (ajax/json-request-format)
-                :response-format :json
-                :keywords? true
-                :handler #(utils/navigate-to "/")
-                })
-    db))
+(re-frame/register-handler
+ :create-model
+ (fn [db [_]]
+   (ajax/POST (get-in db [:model :url])
+              {:params (get-in db [:model :data])
+               :format (ajax/json-request-format)
+               :response-format :json
+               :keywords? true
+               :handler #(utils/navigate-to "/items")
+               })
+   db))

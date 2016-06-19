@@ -41,7 +41,7 @@
      ["/user" {:post register-user}]
      ["/user/:id" ^:interceptors [auth/check-auth auth/check-permission]
       ["/info" {:get get-user-info}]]
-     ["/business/:id/items" {:post items/add-item}]
+     ["/business/:id/items" {:post items/add-item :get items/list-item}]
      ["/about" {:get about-page}]]]])
 
 ;; Consumed by pedestal-rest.server/create-server
