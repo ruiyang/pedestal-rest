@@ -1,8 +1,10 @@
 (ns pedestal-rest.auth
   (:require  [clojure.tools.logging :as log]
              [pedestal-rest.db.core :as db]
+             [ring.util.response :as resp]
              [io.pedestal.impl.interceptor :refer [terminate]]
              [io.pedestal.interceptor.helpers :refer [defbefore defhandler]]
+             [io.pedestal.http :as ph]
              [clj-time.core :refer [hours from-now]]
              [buddy.auth.protocols :as proto]
              [buddy.sign.jwe :as jwe]
@@ -23,12 +25,17 @@
         user (db/get-user username)
         valid? (hashers/check password (:password user))]
     (if-not valid?
-      {:status 401 :body {:message "Wrong credentials"}}
-      (let [info {:name (:email user)}
+      (-> {:message "Wrong username password combination"}
+          ph/json-response
+          (resp/status 401))
+      (let [business (first (db/get-business-by-user-id (:id user)))
+            info {:name (:email user)
+                  :bid (:id business)}
             claims {:user info
                     :exp (-> 3 hours from-now)}
             token (jwe/encrypt claims secret encryption)]
-        {:status 200 :body {:token token}}))))
+        (-> {:token token}
+            (ph/json-response))))))
 
 (defn- fake-handler
   [request]
@@ -37,22 +44,10 @@
 (def ^:private buddy-check-auth
   (wrap-authentication fake-handler auth-backend))
 
-(defbefore check-permission
-  [{:keys [request] :as context}]
-  (let [login-user (get-in request [:identity :user :name])
-        user-id-param (get-in request [:path-params :id])
-        user (db/get-user login-user)
-        valid (= (:id user) (Integer. user-id-param))]
-    (if valid
-      context
-      (-> context
-          terminate
-          (assoc :response {:status 401 :body {:message "Unauthorized resource access"}})))))
-
 (defbefore check-auth
   [{:keys [request] :as context}]
   (let [req-with-auth (buddy-check-auth request)]
-    (if (:identity req-with-auth)
+    (if (contains? req-with-auth :identity)
       (assoc context :request req-with-auth)
       (-> context
           terminate

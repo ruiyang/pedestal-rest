@@ -1,5 +1,6 @@
 (ns pedestal-frontend.pages.login.login-handlers
   (:require [re-frame.core :as re-frame]
+            [pedestal-frontend.db :as db]
             [ajax.core :as ajax]
             [pedestal-frontend.pages.utils :as utils]))
 
@@ -12,6 +13,7 @@
                :format (ajax/json-request-format)
                :response-format :json
                :keywords? true
-               :handler #(utils/navigate-to "/")
+               :handler #(do (swap! db/local-store assoc-in [:auth] (get-in % [:token]))
+                             (utils/navigate-to "/"))
                :error-handler  #(utils/navigate-to "/login")})
    db))

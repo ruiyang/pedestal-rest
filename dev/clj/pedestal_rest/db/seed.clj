@@ -8,12 +8,12 @@
   (do
     (db/create-user! {:first_name "david" :last_name "hudson" :user_name "dev" :user_type 1 :email "dev", :password (hashers/encrypt "")})
     (db/create-user! {:first_name "david2" :last_name "hudson" :user_name "dev2" :user_type 2 :email "dev2", :password (hashers/encrypt "")})
-    (db/add-business! {:user_id (:id (db/get-user "dev")) :business_name "dev's business"})
-    (db/add-business! {:user_id (:id (db/get-user "dev2")) :business_name "dev2's business"})
+    (db/add-business! {:user_id (:id (db/get-user "dev")) :business_name "dev business"})
+    (db/add-business! {:user_id (:id (db/get-user "dev2")) :business_name "dev2 business"})
     (let [u1 (db/get-user "dev")
           u2 (db/get-user "dev2")
-          b1 (db/get-business-by-user-id (:id (db/get-user "dev")))
-          b2 (db/get-business-by-user-id (:id u2))
+          b1 (first (db/get-business-by-user-id (:id (db/get-user "dev"))))
+          b2 (first (db/get-business-by-user-id (:id u2)))
           u1-i1 (db/add-item! {:business_id (:id b1)
                                :item_name "item 1"
                                :description "item1 desc"
@@ -46,7 +46,7 @@
     (db/get-user-by-login {:email "dev2"})
     (db/get-user "dev")
     (db/get-business-by-user-id (:id  (db/get-user "dev")))
-    (count (db/get-items 3))
+    (count (db/get-items 5))
     (db/get-all-users)))
 
 (comment

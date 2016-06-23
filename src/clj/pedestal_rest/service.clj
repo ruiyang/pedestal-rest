@@ -8,7 +8,8 @@
             [pedestal-rest.db.core :as db]
             [buddy.hashers :as hashers]
             [clojure.tools.logging :as log]
-            [pedestal-rest.handlers.items :as items]))
+            [pedestal-rest.handlers.items :as items]
+            [ring.util.response :as ring]))
 (defn about-page
   [request]
   {:message "pedestal-rest: a single page app backend."})
@@ -32,16 +33,18 @@
                       :last_name ""})))
 
 (ph/defon-response wrap-json-response [resp]
-  (bootstrap/json-response resp))
+  (if (ring/response? resp)
+    resp
+    (bootstrap/json-response resp)))
+  
 
 (defroutes routes
   [[["/" {:get home-page}
-     ^:interceptors [(body-params/body-params) wrap-json-response]
+     ^:interceptors [(body-params/body-params) auth/check-auth wrap-json-response]
      ["/login" {:post auth/login}]
      ["/user" {:post register-user}]
-     ["/user/:id" ^:interceptors [auth/check-auth auth/check-permission]
-      ["/info" {:get get-user-info}]]
-     ["/business/:id/items" {:post items/add-item :get items/list-item}]
+     ["/user/info" {:get get-user-info}]
+     ["/items" {:post items/add-item :get items/list-item}]
      ["/about" {:get about-page}]]]])
 
 ;; Consumed by pedestal-rest.server/create-server

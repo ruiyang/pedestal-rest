@@ -49,8 +49,7 @@
       nil)))
 
 (defn get-business-by-user-id [user_id]
-  (first
-   (get-business-by-user {:user_id user_id})))
+   (get-business-by-user {:user_id user_id}))
 
 (defn get-items [business_id]
   (get-items-by-business {:business_id business_id}))

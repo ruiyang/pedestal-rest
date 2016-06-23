@@ -6,19 +6,19 @@
 (re-frame/register-handler
  :initialize-item-list
  (fn [db [_]]
-   (ajax/GET "http://localhost:8080/business/3/items"
+   (ajax/GET "http://localhost:8080/items"
              {:response-format :json
               :keywords? true
               :handler #(re-frame/dispatch [:set-model %])
               })
-   (assoc-in db [:model] {:url "http://localhost:8080/business/3/items"
+   (assoc-in db [:model] {:url "http://localhost:8080/items"
                           :data {}})))
 
 
 (re-frame/register-handler
  :initialize-new-item
  (fn [db [_]]
-  (assoc-in db [:model] {:url "http://localhost:8080/business/3/items"
+  (assoc-in db [:model] {:url "http://localhost:8080/items"
                                          :data {}})))
 
 (re-frame/register-handler

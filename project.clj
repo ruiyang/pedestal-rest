@@ -34,7 +34,8 @@
                  [reagent "0.5.1"]
                  [re-frame "0.7.0"]
                  [secretary "1.2.3"]
-                 [cljs-ajax "0.5.5"]]
+                 [cljs-ajax "0.5.5"]
+                 [alandipert/storage-atom "1.2.4"]]
   :min-lein-version "2.0.0"
   :plugins [[migratus-lein "0.2.0"]
             [lein-environ "1.0.1"]
